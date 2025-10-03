@@ -9,13 +9,11 @@
   - a quantidade de números válidos digitados;
   - a média aritmética desses números.
 */
-
 import java.util.Scanner;
 public class NumMaiorQueZero{
     public static void main(String[] args) {
         int contador = 0, numero;
         double soma = 0, media = 0;
-        
         //laço para entrada de valores, se positivo continua, se negativo laço termina
         for(numero = 0; numero >= numero ; numero++){
             System.out.print("Insira um valor: ");
