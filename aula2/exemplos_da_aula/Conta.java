@@ -1,3 +1,4 @@
+package exemplos_da_aula;
 public class Conta { //definição da CLASSE CONTA
     //atributos
     public int numero; 
@@ -16,11 +17,11 @@ public class Conta { //definição da CLASSE CONTA
     }
     boolean sacar(double valor){
         if(this.saldo >= valor){
-        this.saldo = this.saldo - valor;  // desconta do saldo
-        return true;          // saque feito com sucesso
+            this.saldo = this.saldo - valor;  // desconta do saldo
+            return true;          // saque feito com sucesso
         } else {
-        return false;         // não tinha saldo suficiente
-    }
+            return false; 
+        }        // não tinha saldo suficiente
     }
     public static void main(String[] args) {
         Conta contafulaninho = new Conta();
