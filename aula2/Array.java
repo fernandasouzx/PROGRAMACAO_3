@@ -1,3 +1,10 @@
+/*
+Crie uma ArrayList<String> para armazenar nomes de alunos.
+Adicione pelo menos 5 nomes.
+Use um Iterator para percorrer e imprimir cada nome da lista.
+Em seguida, remova um nome e exiba novamente a lista atualizada.
+*/
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
