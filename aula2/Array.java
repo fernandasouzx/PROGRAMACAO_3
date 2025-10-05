@@ -6,7 +6,6 @@ Em seguida, remova um nome e exiba novamente a lista atualizada.
 */
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Array {
     String nome;
@@ -37,9 +36,7 @@ public class Array {
 
         //lista origibal com os 5 alunos
         System.out.println("Lista original:");
-        Iterator <Array> i = array.iterator();
-        while (i.hasNext()) {
-            Array aluno = i.next();
+        for (Array aluno : array) {
             System.out.println("Alunos: " + aluno.nome);
         }
 
@@ -47,9 +44,7 @@ public class Array {
 
         // depois do remove, criar novo iterator
         System.out.println("\nLista após remover índice 0:");
-        i = array.iterator();
-        while (i.hasNext()) {
-            Array aluno = i.next();
+        for (Array aluno : array) {
             System.out.println("Alunos: " + aluno.nome);
         }
     }
