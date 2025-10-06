@@ -33,8 +33,6 @@ class Triatleta_ implements Corredor, Nadador, Ciclista {
         System.out.println(nome + " está pedalando!");
     }
 }
-
-// 👉 Aqui o nome da classe pública tem que bater com o nome do arquivo!
 public class Triatleta {
     public static void main(String[] args) {
         Triatleta_ t = new Triatleta_("Fernanda");
