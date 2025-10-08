@@ -1,18 +1,23 @@
 package trabalho;
-
 import java.time.LocalDate;
 public class Filme extends Item {
 
     private String diretor;
     private int duracaoMinutos;
 
+    @Override
+    protected void CampoVazioException(String string){
+        throw new IllegalArgumentException("O campo '" + string + "' deve ter algo.");
+    }
+
     public Filme(String titulo, String descricao, LocalDate dataCadastro, String diretor, int duracaoMinutos) {
         super(titulo, descricao, dataCadastro);
         if (diretor == null || diretor.isBlank()) {
-            throw new IllegalArgumentException("O diretor não pode ser vazio.");
+            CampoVazioException("Diretor");
         }
         if (duracaoMinutos <= 0) {
-            throw new IllegalArgumentException("A duração deve ser positiva.");
+            CampoVazioException("Duração em minutos");
+
         }
         this.diretor = diretor;
         this.duracaoMinutos = duracaoMinutos;
