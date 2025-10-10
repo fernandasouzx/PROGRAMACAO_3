@@ -8,8 +8,8 @@ public class Main {
         GerenciadorItens gerenciador = new GerenciadorItens();
 
         // Cria alguns itens
-        Livro livro = new Livro("O Hobbit", "J.R.R. Tolkien", "Aventura fantástica", LocalDate.now(), 310);
-        Filme filme = new Filme("Interestelar", "Ficção científica", LocalDate.now(), "Christopher Nolan", 169);
+        Livro livro = new Livro("O Hobbit",  "Aventura fantástica", "J.R.R. Tolkien", LocalDate.now(), 310);
+        Filme filme = new Filme("Interestelar", "Ficção científica", "Christopher Nolan",  LocalDate.now(), 169);
 
         try {
             // Adiciona os itens ao gerenciador
@@ -42,5 +42,17 @@ public class Main {
         // Mostra detalhes
         System.out.println("\nDetalhes dos itens:");
         gerenciador.listarTodos().forEach(item -> System.out.println(item.exibirDetalhes()));
+
+          // Teste de exportação
+        String caminho = "itens.txt";
+        gerenciador.exportarParaArquivo(caminho);
+
+        // Teste de importação em outro gerenciador
+        GerenciadorItens novoGerenciador = new GerenciadorItens();
+        novoGerenciador.importarDeArquivo(caminho);
+
+        System.out.println("\n--- Itens importados do arquivo ---");
+        novoGerenciador.listarTodos().forEach(i -> System.out.println(i.exibirDetalhes()));
+
     }
 }

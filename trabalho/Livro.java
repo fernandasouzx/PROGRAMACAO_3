@@ -9,7 +9,7 @@ public class Livro extends Item {
         throw new IllegalArgumentException("O campo '" + string + "' deve ter algo.");
     }
     // Construtor
-    public Livro(String titulo, String autor, String descricao, LocalDate dataCadastro,  int numeroPaginas) {
+    public Livro(String titulo, String descricao, String autor, LocalDate dataCadastro,  int numeroPaginas) {
         super(titulo, descricao, dataCadastro);
 
         if (autor == null || autor.isBlank()) {
@@ -22,11 +22,18 @@ public class Livro extends Item {
         this.autor = autor;
         this.numeroPaginas = numeroPaginas;
     }
+    public String getAutor() {
+        return autor;
+    }
+
+    public int getNumeroPaginas() {
+        return numeroPaginas;
+    }
     @Override
     public String exibirDetalhes() {
         return "Livro: " + getTitulo() +
-               "\nAutor: " + autor +
                "\nDescrição: " + getDescricao() +
+               "\nAutor: " + getAutor() +
                "\nCadastrado em: " + getDataCadastro() +
                "\nPáginas: " + numeroPaginas;
     }
