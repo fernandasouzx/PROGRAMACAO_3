@@ -19,7 +19,7 @@ public class LoginFrame extends JFrame {
         gbc.gridx = 0;
         gbc.anchor = GridBagConstraints.CENTER;
 
-        // Fonte personalizada (opcional)
+        // Fonte personalizada
         Font customFont = new Font("SansSerif", Font.BOLD, 14);
         try {
             customFont = Font.createFont(Font.TRUETYPE_FONT, new File("/home/fernanda/BeautifulBloom.ttf")).deriveFont(18f);
