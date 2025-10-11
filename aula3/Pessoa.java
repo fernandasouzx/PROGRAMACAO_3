@@ -5,8 +5,8 @@
 * informações. 
 */
 public class Pessoa {
-    private String nome;
-    private int idade;   
+    String nome;
+    int idade;   
 
     public Pessoa(String nome, int idade){
         this.nome = nome;
@@ -23,7 +23,7 @@ public class Pessoa {
 
     // subclasse
     public static class Aluno extends Pessoa {
-        private String matricula;  
+        String matricula;  
         
         public Aluno(String nome, int idade, String matricula){
             super(nome, idade); 

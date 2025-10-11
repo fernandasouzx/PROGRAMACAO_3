@@ -35,7 +35,7 @@ public class Filme extends Item {
         return "Filme: " + getTitulo() + "\n" +
             "Descrição: " + getDescricao() + "\n" +
             "Diretor: " + diretor + "\n" +
-            "Duração: " + duracaoMinutos + " minutos\n" +
-            "Data de Cadastro: " + getDataCadastro() + "\n";
+            "Data de Cadastro: " + getDataCadastro()+"\n"+ 
+            "Duração: " + duracaoMinutos + " minutos\n";
     }   
 }

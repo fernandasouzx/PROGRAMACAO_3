@@ -1,0 +1,4 @@
+Filme;Interestelar;Ficção científica;Christopher Nolan;2025-10-09;169
+
+Livro;O Hobbit;Aventura fantástica;J.R.R. Tolkien;2025-10-09;310
+

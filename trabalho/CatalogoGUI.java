@@ -1,4 +1,5 @@
 package trabalho;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,9 +11,8 @@ import java.util.List;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-
 public class CatalogoGUI extends JFrame {
-    private List<Item> itens = new ArrayList<>(); //cria um array para armazenar os livros e filmes
+    private List<Item> itens = new ArrayList<>();
     private JTextField tituloField;
     private JTextArea descricaoArea;
     private JComboBox<String> tipoCombo;
@@ -21,159 +21,133 @@ public class CatalogoGUI extends JFrame {
     private JTextField diretorField, duracaoField;
     private JTextArea resultadoArea;
     private JTextField buscaField;
-    private Color corPersonalizada = new Color(0x64, 0x64, 0x86); //cor definida pelo nome e rga - cinza arroxeado
-    private Color corHover = new Color(0x7D, 0x7D, 0xA0); //cor que o mouse passa
+    private Color corPersonalizada = new Color(0x64, 0x64, 0x86);
+    private Color corHover = new Color(0x7D, 0x7D, 0xA0);
 
-    //construtor da classe, onde a interface gráfica é montada.
     public CatalogoGUI() {
-        //Cabeçalho e título fixo da janela
-        setTitle("Catálogo de Livros e Filmes"); //titulo principal
-        setSize(1000, 1000); //define o tamanho inicial da janela em pixels (largura, altura).
+        setTitle("Catálogo de Livros e Filmes");
+        setSize(1000, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout(10, 10));
-        getContentPane().setBackground(new Color(0xF0, 0xF0, 0xF5)); //define a cor de fundo do painel de conteúdo da janela.
+        getContentPane().setBackground(new Color(0xF0, 0xF0, 0xF5));
 
-        // Cria o painel superior que tera o título e uma imagem.
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+        // --- PAINEL SUPERIOR (CABEÇALHO) ---
+        JPanel topPanel = new JPanel(new BorderLayout(20, 0));
         topPanel.setBackground(corPersonalizada);
-        topPanel.setBorder(new EmptyBorder(10, 20, 10, 30));
+        topPanel.setBorder(new EmptyBorder(10, 20, 10, 20));
 
-        // Carregar a imagem do canto superior esquerdo
-        ImageIcon icon2 = null;
-        try {
-            icon2 = new ImageIcon("/home/fernanda/image2.jpg"); // Caminho da imagem
-            Image img2 = icon2.getImage().getScaledInstance(100, 120, Image.SCALE_SMOOTH);
-            icon2 = new ImageIcon(img2);
-        } catch (Exception e) {
-            System.err.println("Erro ao carregar segunda imagem: " + e.getMessage());
-            icon2 = new ImageIcon();
-        }
-        JLabel imagemLabel2 = new JLabel(icon2);
-
-        // Título centralizado
-        JLabel titleLabel = new JLabel("Catálogo de Livros e Filmes", SwingConstants.CENTER);
+        JLabel titleLabel = new JLabel("Catálogo de Livros e Filmes");
         titleLabel.setForeground(Color.WHITE);
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 32));
-        // Adiciona imagem à esquerda e título no centro do topo
-        topPanel.add(imagemLabel2, BorderLayout.WEST);
-        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        topPanel.add(Box.createVerticalStrut(20));
-        topPanel.add(titleLabel);
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        topPanel.add(titleLabel, BorderLayout.CENTER);
 
         add(topPanel, BorderLayout.NORTH);
 
-        // Carregar a imagem na janela
-        ImageIcon icon = null;
-        try {
-            icon = new ImageIcon("/home/fernanda/logo.jpg");
-            Image img = icon.getImage().getScaledInstance(100, 120, Image.SCALE_SMOOTH);
-            icon = new ImageIcon(img);
-        } catch (Exception e) {
-            System.err.println("Erro ao carregar imagem: " + e.getMessage());
-            icon = new ImageIcon();
-        }
-        JLabel imagemLabel = new JLabel(icon);
-        imagemLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        // --- PAINEL DE CONTROLES (BOTÕES E BUSCA) ---
+        JPanel controlPanel = new JPanel();
+        controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
+        controlPanel.setBackground(Color.WHITE);
+        controlPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        // Painel de botões e busca
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
-        buttonPanel.setBackground(Color.WHITE);
-        buttonPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
-
-        // Painel para todos os botões
-        JPanel actionButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 5));
+        // Painel para os botões de ação
+        JPanel actionButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 5));
         actionButtonPanel.setBackground(Color.WHITE);
 
-        // --- Painel da busca ---
-        JPanel buscaPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)); // Alinha à esquerda
-        buscaPanel.setBackground(Color.WHITE);
-        
-        // Adiciona o painel de busca antes dos outros botões
-        buttonPanel.add(buscaPanel);
+        actionButtonPanel.add(createCustomButton("Adicionar"));
+        actionButtonPanel.add(createCustomButton("Listar"));
+        actionButtonPanel.add(createCustomButton("Exportar Dados"));
+        actionButtonPanel.add(createCustomButton("Importar Dados"));
 
-        JButton adicionarButton = createCustomButton("Adicionar");
-        adicionarButton.addActionListener(new AdicionarListener());
-        actionButtonPanel.add(adicionarButton);
+        // --- PAINEL DE BUSCA COM FILTRO AO LADO ---
+        JPanel searchAndFilterPanel = new JPanel(new BorderLayout(5, 0)); // BorderLayout para alinhar
+        searchAndFilterPanel.setBackground(Color.WHITE);
+        searchAndFilterPanel.setBorder(BorderFactory.createTitledBorder("Busca por Título, Autor ou Diretor"));
 
-        JButton listarButton = createCustomButton("Listar");
-        listarButton.addActionListener(new ListarListener());
-        actionButtonPanel.add(listarButton);
+        buscaField = new JTextField();
+        buscaField.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        searchAndFilterPanel.add(buscaField, BorderLayout.CENTER); // Campo de busca ocupa o centro
 
-        JButton filtrarButton = createCustomButton("Filtrar");
+        // ### ALTERAÇÃO AQUI: Botão de filtrar com texto ###
+        JButton filtrarButton = new JButton("Filtrar");
+        filtrarButton.setToolTipText("Filtrar resultados");
+        filtrarButton.setBackground(corPersonalizada);
+        filtrarButton.setForeground(Color.WHITE);
+        filtrarButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        filtrarButton.setOpaque(true);
+        filtrarButton.setBorderPainted(false);
         filtrarButton.addActionListener(new FiltrarListener());
-        actionButtonPanel.add(filtrarButton);
-
-        JButton exportarButton = createCustomButton("Exportar Dados");
-        exportarButton.addActionListener(new ExportarListener());
-        actionButtonPanel.add(exportarButton);
-
-        JButton importarButton = createCustomButton("Importar Dados");
-        importarButton.addActionListener(new ImportarListener());
-        actionButtonPanel.add(importarButton);
-
-        JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 15));
-        searchPanel.setBackground(Color.WHITE);
-
-        //CRIA TEXTO AO LADO DA BARRA DE PESQUISA 
-        JLabel buscaLabel = new JLabel("Busca por título:");    
-        buscaField = new JTextField(30);
-
-        // Adiciona o texto e o campo de busca no mesmo painel
-        searchPanel.add(buscaLabel);
-        searchPanel.add(buscaField);
+        filtrarButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                filtrarButton.setBackground(corHover);
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+                filtrarButton.setBackground(corPersonalizada);
+            }
+        });
         
-        buttonPanel.add(actionButtonPanel);
-        buttonPanel.add(Box.createVerticalStrut(10)); // Espaço entre botões de ação e busca
-        buttonPanel.add(searchPanel);
+        searchAndFilterPanel.add(filtrarButton, BorderLayout.EAST); // Botão fica à direita
 
-        // Painel de formulário (esquerda) com imagem no topo
+        controlPanel.add(actionButtonPanel);
+        controlPanel.add(Box.createVerticalStrut(15));
+        controlPanel.add(searchAndFilterPanel);
+
+        // --- PAINEL DE FORMULÁRIO (ESQUERDA) ---
         JPanel formPanel = new JPanel(new GridBagLayout());
-        formPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
+        formPanel.setBorder(new EmptyBorder(10, 10, 10, 10)); // Bordas para espaçamento interno
         formPanel.setBackground(Color.WHITE);
         GridBagConstraints gbc = new GridBagConstraints();
-
-        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.insets = new Insets(8, 8, 8, 8);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
+        // ### ALTERAÇÃO AQUI: Adicionando imagem e título centralizado ao formulário ###
+        // 1. Carregar a imagem para o formulário
+        ImageIcon formIcon = new ImageIcon("/home/fernanda/logo.jpg"); // <-- **ATENÇÃO:** Coloque o caminho da imagem que quer no formulário
+        Image formImg = formIcon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
+        JLabel imagemLabelForm = new JLabel(new ImageIcon(formImg));
+        
+        // 2. Criar o label do título
+        JLabel formTitleLabel = new JLabel("Adicionar Novo Item");
+        formTitleLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        formTitleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        
+        // 3. Adicionar a imagem no topo (linha 0)
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 2; // Ocupa duas colunas
         gbc.anchor = GridBagConstraints.CENTER;
-        formPanel.add(imagemLabel, gbc);
-        gbc.gridwidth = 1;
-        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.NONE;
+        formPanel.add(imagemLabelForm, gbc);
         
-
-        gbc.gridx = 0;
+        // 4. Adicionar o título abaixo da imagem (linha 1)
         gbc.gridy = 1;
-        formPanel.add(new JLabel("Título:"), gbc);
-        gbc.gridx = 1;
-        tituloField = new JTextField(20);
-        formPanel.add(tituloField, gbc);
-        
+        formPanel.add(formTitleLabel, gbc);
 
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        formPanel.add(new JLabel("Descrição:"), gbc);
-        gbc.gridx = 1;
-        descricaoArea = new JTextArea(6, 30);
+        // 5. Resetar gbc e adicionar os outros campos a partir da linha 2
+        gbc.gridwidth = 1; // Volta a ocupar uma coluna
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        gbc.gridy = 2; gbc.gridx = 0; formPanel.add(new JLabel("Título:"), gbc);
+        gbc.gridx = 1; tituloField = new JTextField(20); formPanel.add(tituloField, gbc);
+        
+        gbc.gridy = 3; gbc.gridx = 0; formPanel.add(new JLabel("Descrição:"), gbc);
+        gbc.gridx = 1; gbc.ipady = 40; // Aumenta a altura da área de descrição
+        descricaoArea = new JTextArea(4, 20);
         descricaoArea.setLineWrap(true);
         descricaoArea.setWrapStyleWord(true);
         formPanel.add(new JScrollPane(descricaoArea), gbc);
+        gbc.ipady = 0; // Reseta a altura
 
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        formPanel.add(new JLabel("Tipo:"), gbc);
-        gbc.gridx = 1;
-        tipoCombo = new JComboBox<>(new String[]{"Livro", "Filme"});
-        formPanel.add(tipoCombo, gbc);
+        gbc.gridy = 4; gbc.gridx = 0; formPanel.add(new JLabel("Tipo:"), gbc);
+        gbc.gridx = 1; tipoCombo = new JComboBox<>(new String[]{"Livro", "Filme"}); formPanel.add(tipoCombo, gbc);
 
         specificPanel = new JPanel(new CardLayout());
         specificPanel.setBackground(Color.WHITE);
 
-        JPanel livroPanel = new JPanel(new GridLayout(4, 4, 10, 10));
+        JPanel livroPanel = new JPanel(new GridLayout(2, 2, 5, 5));
         livroPanel.setBackground(Color.WHITE);
         livroPanel.add(new JLabel("Autor:"));
         autorField = new JTextField();
@@ -183,7 +157,7 @@ public class CatalogoGUI extends JFrame {
         livroPanel.add(paginasField);
         specificPanel.add(livroPanel, "Livro");
 
-        JPanel filmePanel = new JPanel(new GridLayout(2, 2, 10, 10));
+        JPanel filmePanel = new JPanel(new GridLayout(2, 2, 5, 5));
         filmePanel.setBackground(Color.WHITE);
         filmePanel.add(new JLabel("Diretor:"));
         diretorField = new JTextField();
@@ -193,26 +167,49 @@ public class CatalogoGUI extends JFrame {
         filmePanel.add(duracaoField);
         specificPanel.add(filmePanel, "Filme");
 
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        formPanel.add(new JLabel("Campos Específicos:"), gbc);
-        gbc.gridx = 1;
-        formPanel.add(specificPanel, gbc);
+        gbc.gridy = 5; gbc.gridx = 0; gbc.gridwidth = 2; formPanel.add(specificPanel, gbc);
+        // ### FIM DAS ALTERAÇÕES NO FORMULÁRIO ###
 
-        JPanel centerPanel = new JPanel(new BorderLayout());
-        centerPanel.add(buttonPanel, BorderLayout.NORTH);
+        // Painel central que une formulário e controles
+        JPanel centerPanel = new JPanel(new BorderLayout(10, 10));
+        centerPanel.add(controlPanel, BorderLayout.NORTH);
         centerPanel.add(formPanel, BorderLayout.CENTER);
         centerPanel.setBorder(new EmptyBorder(0, 10, 10, 10));
         add(centerPanel, BorderLayout.CENTER);
 
-        resultadoArea = new JTextArea(20, 30); //definie o tamanho da area onde vai os 'resultados'
+        // Área de resultados (direita)
+        resultadoArea = new JTextArea();
         resultadoArea.setEditable(false);
-        resultadoArea.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-        resultadoArea.setBorder(BorderFactory.createTitledBorder("Resultados"));
-        add(new JScrollPane(resultadoArea), BorderLayout.EAST);
+        resultadoArea.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        resultadoArea.setBorder(new EmptyBorder(10, 10, 10, 10));
+        JScrollPane scrollResultados = new JScrollPane(resultadoArea);
+        scrollResultados.setBorder(BorderFactory.createTitledBorder("Resultados"));
+        scrollResultados.setPreferredSize(new Dimension(350, 0));
+        add(scrollResultados, BorderLayout.EAST);
+
+        // Adicionando ActionListeners aos botões
+        for (Component comp : actionButtonPanel.getComponents()) {
+            if (comp instanceof JButton) {
+                JButton button = (JButton) comp;
+                String text = button.getText();
+                switch (text) {
+                    case "Adicionar":
+                        button.addActionListener(new AdicionarListener());
+                        break;
+                    case "Listar":
+                        button.addActionListener(new ListarListener());
+                        break;
+                    case "Exportar Dados":
+                        button.addActionListener(new ExportarListener());
+                        break;
+                    case "Importar Dados":
+                        button.addActionListener(new ImportarListener());
+                        break;
+                }
+            }
+        }
 
         tipoCombo.addActionListener(new TipoListener());
-
         showSpecificPanel("Livro");
     }
 
@@ -223,7 +220,7 @@ public class CatalogoGUI extends JFrame {
         button.setOpaque(true);
         button.setBorderPainted(false);
         button.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        button.setPreferredSize(new Dimension(150, 40)); // Aumente o tamanho aqui (width=150, height=40)
+        button.setPreferredSize(new Dimension(160, 40));
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -240,12 +237,16 @@ public class CatalogoGUI extends JFrame {
     private void showSpecificPanel(String tipo) {
         CardLayout cl = (CardLayout) specificPanel.getLayout();
         cl.show(specificPanel, tipo);
-        autorField.setText("");
-        paginasField.setText("");
-        diretorField.setText("");
-        duracaoField.setText("");
+        if ("Livro".equals(tipo)) {
+            diretorField.setText("");
+            duracaoField.setText("");
+        } else {
+            autorField.setText("");
+            paginasField.setText("");
+        }
     }
 
+    // [ O restante do seu código (classes Listener, limparCampos, main) continua aqui, sem alterações ]
     private class TipoListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -424,6 +425,11 @@ public class CatalogoGUI extends JFrame {
     }
 
     public static void main(String[] args) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         SwingUtilities.invokeLater(() -> new CatalogoGUI().setVisible(true));
     }
 }

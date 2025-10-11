@@ -56,16 +56,16 @@ public class GerenciadorItens {
                 case "Livro":
                     String titulo = p[1];
                     String descricao = p[2];
-                    String autor = p[4];
-                    LocalDate dataCadastro = LocalDate.parse(p[3]);
+                    String autor = p[3];
+                    LocalDate dataCadastro = LocalDate.parse(p[4]);
                     int paginas = Integer.parseInt(p[5]);
                     return new Livro(titulo, descricao, autor, dataCadastro, paginas);
                     
                 case "Filme":
                 titulo = p[1];
                 descricao = p[2];
-                String diretor = p[4];
-                dataCadastro = LocalDate.parse(p[3]);
+                String diretor = p[3];
+                dataCadastro = LocalDate.parse(p[4]);
                 int duracao = Integer.parseInt(p[5]);
                 return new Filme(titulo, descricao, diretor, dataCadastro, duracao);
 

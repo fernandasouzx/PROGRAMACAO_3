@@ -71,7 +71,7 @@ public abstract class Item {
 
                 case "Filme":
                     // Formato: Filme;Descricao;Data;Diretor;Duracao
-                    String diretor = partes[4];
+                    String diretor = partes[3];
                     int duracao = Integer.parseInt(partes[5]);
                     return new Filme(titulo, descricao, diretor, dataCadastro, duracao);
 

@@ -8,4 +8,4 @@ public class media3notas{
             System.out.printf("Aprovado!\nMedia = %.2f%n", media);
         }
     }
-}https://github.com/fernandasouzx/PROGRAMACAO_3/blob/35e18d2653f6f6773531bfd7f0ccc12e91c2c6fa/estudos_guanabara/ComparandoStrings.java
+}

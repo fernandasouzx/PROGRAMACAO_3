@@ -4,16 +4,19 @@ construtores: Um sem parâmetros que define valores padrão. Um com
 parâmetros para inicializar os atributos. No método main, instancie dois
 objetos utilizando os dois construtores diferentes e exiba os dados.
  */
+
+import trabalho.Livro;
+
 public class Livro {
     String titulo;
     String autor;
     //construtor padrao
-    public  Livro(){
+    public Livro(){
         this.titulo = "Titulo Padrão";
         this.autor = "Autor Padrão";
     }
     //construtor com parametros
-    public  Livro(String titulo, String autor){
+    public Livro(String titulo, String autor){
         this.titulo = titulo;
         this.autor = autor;
     }
