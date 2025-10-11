@@ -102,9 +102,9 @@ public class CatalogoGUI extends JFrame {
         gbc.insets = new Insets(8, 8, 8, 8);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // ### ALTERAÇÃO AQUI: Adicionando imagem e título centralizado ao formulário ###
+        // Adiciona imagem e título centralizado ao formulári
         // 1. Carregar a imagem para o formulário
-        ImageIcon formIcon = new ImageIcon("/home/fernanda/logo.jpg"); // <-- **ATENÇÃO:** Coloque o caminho da imagem que quer no formulário
+        ImageIcon formIcon = new ImageIcon("/home/fernanda/logo.jpg"); 
         Image formImg = formIcon.getImage().getScaledInstance(120, 120, Image.SCALE_SMOOTH);
         JLabel imagemLabelForm = new JLabel(new ImageIcon(formImg));
         
@@ -168,7 +168,7 @@ public class CatalogoGUI extends JFrame {
         specificPanel.add(filmePanel, "Filme");
 
         gbc.gridy = 5; gbc.gridx = 0; gbc.gridwidth = 2; formPanel.add(specificPanel, gbc);
-        // ### FIM DAS ALTERAÇÕES NO FORMULÁRIO ###
+        
 
         // Painel central que une formulário e controles
         JPanel centerPanel = new JPanel(new BorderLayout(10, 10));
@@ -246,7 +246,7 @@ public class CatalogoGUI extends JFrame {
         }
     }
 
-    // [ O restante do seu código (classes Listener, limparCampos, main) continua aqui, sem alterações ]
+    
     private class TipoListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -320,7 +320,7 @@ public class CatalogoGUI extends JFrame {
         diretorField.setText("");
         duracaoField.setText("");
     }
-
+    //Faz a busca dos itens
     private class ListarListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -334,7 +334,7 @@ public class CatalogoGUI extends JFrame {
             }
         }
     }
-
+    //Faz a busca dos itens
     private class FiltrarListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -366,6 +366,7 @@ public class CatalogoGUI extends JFrame {
         }
     }
 
+    //Salva os dados em um arquivo
     private class ExportarListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -398,7 +399,7 @@ public class CatalogoGUI extends JFrame {
             }
         }
     }
-
+    //Lê os dados de um arquivo salvo
     private class ImportarListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
