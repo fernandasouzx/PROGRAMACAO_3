@@ -76,7 +76,6 @@ public class GerenciadorItens {
             throw new ItemInvalidoException("Erro ao ler linha: " + linha);
         }
     }
-
     //------------ EXPORTAÇAO -----------------
     public void exportarParaArquivo(String caminho) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminho))) {
@@ -105,7 +104,6 @@ public class GerenciadorItens {
         } catch (IOException e) {
             System.out.println("Erro ao exportar itens: " + e.getMessage());
         }
-
     }
     //------------ Importação -----------------
     public void importarDeArquivo(String caminho) {
